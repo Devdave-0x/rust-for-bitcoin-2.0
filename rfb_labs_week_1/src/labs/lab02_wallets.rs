@@ -18,9 +18,9 @@ pub fn list_wallets<C: RpcClient>(client: &C) -> LabResult<Vec<String>> {
         .ok_or(LabError::Parse("listwallets: expected array".to_owned()))?
         .iter()
         .map(|v| {
-            v.as_str()
-                .map(ToOwned::to_owned)
-                .ok_or(LabError::Parse("listwallets: expected string element".to_owned()))
+            v.as_str().map(ToOwned::to_owned).ok_or(LabError::Parse(
+                "listwallets: expected string element".to_owned(),
+            ))
         })
         .collect()
 }

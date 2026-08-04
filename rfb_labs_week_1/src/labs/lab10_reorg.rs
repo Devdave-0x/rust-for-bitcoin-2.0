@@ -34,7 +34,11 @@ pub fn disconnect_peer<C: RpcClient>(client: &C, peer_address: &str) -> LabResul
 
 /// Reconnect a peer for a one-time synchronization attempt.
 pub fn reconnect_peer<C: RpcClient>(client: &C, peer_address: &str) -> LabResult<()> {
-    client.call(None, "addnode", &[peer_address.to_owned(), "onetry".to_owned()])?;
+    client.call(
+        None,
+        "addnode",
+        &[peer_address.to_owned(), "onetry".to_owned()],
+    )?;
     Ok(())
 }
 

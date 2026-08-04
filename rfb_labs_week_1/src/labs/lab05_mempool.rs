@@ -18,10 +18,9 @@ pub fn send_btc<C: RpcClient>(
         &[destination.to_owned(), format!("{}", amount_btc)],
     )?;
     let value = parse_cli_value(&raw)?;
-    value
-        .as_str()
-        .map(ToOwned::to_owned)
-        .ok_or(LabError::Parse("sendtoaddress: expected txid string".to_owned()))
+    value.as_str().map(ToOwned::to_owned).ok_or(LabError::Parse(
+        "sendtoaddress: expected txid string".to_owned(),
+    ))
 }
 
 /// Return the node's local mempool as a list of TXIDs.
@@ -33,9 +32,9 @@ pub fn get_raw_mempool<C: RpcClient>(client: &C) -> LabResult<Vec<String>> {
         .ok_or(LabError::Parse("getrawmempool: expected array".to_owned()))?
         .iter()
         .map(|v| {
-            v.as_str()
-                .map(ToOwned::to_owned)
-                .ok_or(LabError::Parse("getrawmempool: expected string element".to_owned()))
+            v.as_str().map(ToOwned::to_owned).ok_or(LabError::Parse(
+                "getrawmempool: expected string element".to_owned(),
+            ))
         })
         .collect()
 }

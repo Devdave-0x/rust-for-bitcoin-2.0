@@ -9,7 +9,11 @@ pub fn decode_verbose_transaction<C: RpcClient>(
     client: &C,
     txid: &str,
 ) -> LabResult<DecodedTransaction> {
-    let raw = client.call(None, "getrawtransaction", &[txid.to_owned(), "2".to_owned()])?;
+    let raw = client.call(
+        None,
+        "getrawtransaction",
+        &[txid.to_owned(), "2".to_owned()],
+    )?;
     let value = parse_cli_value(&raw)?;
 
     let txid_out = value
@@ -45,7 +49,10 @@ pub fn decode_verbose_transaction<C: RpcClient>(
                 .and_then(|v| v.as_f64())
                 .ok_or(LabError::MissingField("vin.prevout.value"))?;
             Ok(DecodedInput {
-                previous_output: OutPoint { txid: prev_txid, vout },
+                previous_output: OutPoint {
+                    txid: prev_txid,
+                    vout,
+                },
                 previous_value,
             })
         })

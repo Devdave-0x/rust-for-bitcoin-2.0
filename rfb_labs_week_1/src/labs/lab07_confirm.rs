@@ -17,17 +17,16 @@ pub fn mine_one_block<C: RpcClient>(client: &C, miner_address: &str) -> LabResul
         .and_then(|arr| arr.first())
         .and_then(|v| v.as_str())
         .map(ToOwned::to_owned)
-        .ok_or(LabError::Parse("generatetoaddress: expected at least one block hash".to_owned()))
+        .ok_or(LabError::Parse(
+            "generatetoaddress: expected at least one block hash".to_owned(),
+        ))
 }
 
 /// Return true only when this node's mempool contains no transactions.
 pub fn mempool_is_empty<C: RpcClient>(client: &C) -> LabResult<bool> {
     let raw = client.call(None, "getrawmempool", &[])?;
     let value = parse_cli_value(&raw)?;
-    Ok(value
-        .as_array()
-        .map(|arr| arr.is_empty())
-        .unwrap_or(false))
+    Ok(value.as_array().map(|arr| arr.is_empty()).unwrap_or(false))
 }
 
 /// Return a transaction's confirmation count in the selected wallet.
