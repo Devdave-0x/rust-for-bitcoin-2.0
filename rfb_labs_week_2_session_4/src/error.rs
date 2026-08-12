@@ -41,10 +41,47 @@ pub enum LibraryError {
 }
 
 impl fmt::Display for LibraryError {
-    fn fmt(&self, _formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         // TODO(Part 2): return a useful, human-readable message for every
         // variant. Include the ids and numbers the variant carries.
-        todo!("implement Display for LibraryError")
+        match self {
+            LibraryError::EmptyTitle => write!(f, "there is an empty title"),
+            LibraryError::InvalidReturnDay {
+                day_borrowed,
+                day_returned,
+            } => {
+                write!(
+                    f,
+                    "cannot return on day {day_returned}, item was borrowed on day {day_borrowed}"
+                )
+            }
+
+            LibraryError::BorrowLimitReached { member_id, limit } => {
+                write!(f, "member {member_id} borrow limit {limit} has reached")
+            }
+            LibraryError::DuplicateItemId { id } => {
+                write!(f, "There is a duplicate item id {id}")
+            }
+            LibraryError::DuplicateMemberId { id } => {
+                write!(f, "a member with id {id} already exists")
+            }
+            LibraryError::ItemAlreadyOnLoan { id, member_id } => {
+                write!(f, "Item {id} is already on loan to member {member_id}")
+            }
+            LibraryError::ItemNotOnLoan { id } => {
+                write!(f, "Item with id {id} is not load")
+            }
+            LibraryError::ItemNotFound { id } => {
+                write!(f, "Item with id {id} not found")
+            }
+            LibraryError::MemberNotFound { id } => {
+                write!(f, "Member with id {id} not found")
+            }
+            LibraryError::ItemIsLost { id } => {
+                write!(f, "Item with id {id} is lost")
+            }
+        }
+        // todo!("implement Display for LibraryError")
     }
 }
 
