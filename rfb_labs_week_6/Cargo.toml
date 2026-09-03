@@ -1,6 +1,31 @@
 [package]
 name = "rfb_labs_week_6"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+
+[[bin]]
+name = "btc-wallet"
+path = "src/main.rs"
 
 [dependencies]
+# Wallet logic, address derivation, transaction building/signing.
+# "rusqlite" enables bdk_chain's built-in SQLite persistence (no extra crate needed).
+# "all-keys" enables BIP-39 mnemonic support.
+bdk_wallet       = { version = "1", features = ["all-keys", "rusqlite"] }
+# Block-by-block blockchain sync via Bitcoin Core RPC
+bdk_bitcoind_rpc = "0.17"
+# Direct RPC for broadcasting and node queries
+bitcoincore-rpc  = "0.19"
+# Bitcoin primitive types
+bitcoin          = { version = "0.32", features = ["rand-std"] }
+# Mnemonic generation and import
+bip39            = { version = "2", features = ["rand"] }
+# CLI
+clap             = { version = "4", features = ["derive"] }
+# Error handling
+anyhow           = "1"
+# Load .env for RPC credentials
+dotenv           = "0.15"
+# Serialize descriptor pair to disk
+serde            = { version = "1", features = ["derive"] }
+serde_json       = "1"

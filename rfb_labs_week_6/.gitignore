@@ -1,0 +1,4 @@
+/target
+.env
+wallet.db
+wallet_descriptors.json
